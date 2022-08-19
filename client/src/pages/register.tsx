@@ -18,11 +18,15 @@ const Register = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/auth/register", {
-        email,
-        password,
-        username,
-      });
+      const res = await axios.post(
+        "/auth/register",
+        {
+          email,
+          password,
+          username,
+        },
+        { withCredentials: true }
+      );
       console.log("res", res);
       router.push("/login");
     } catch (error: any) {
@@ -55,7 +59,7 @@ const Register = () => {
               setValue={setPassword}
               error={errors.password}
             />
-            <button className="w-full py-2 mb-1 text-xs font-bold text-white uppercase bg-gray-400 border border-gray-400 rounded">
+            <button className="w-full h-12 py-2 mb-1 text-xs font-bold text-white uppercase bg-gray-400 border border-gray-400 rounded">
               회원 가입
             </button>
           </form>
