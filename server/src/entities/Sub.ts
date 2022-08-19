@@ -4,12 +4,11 @@ import {
   Entity,
   Index,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
   OneToMany,
 } from "typeorm";
 import BaseEntity from "./Entity";
-import { Post } from "./Post";
+import Post from "./Post";
 import { User } from "./User";
 
 @Entity("subs")
