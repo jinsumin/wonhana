@@ -11,7 +11,6 @@ import dotenv from "dotenv";
 
 const app = express();
 const origin = process.env.ORIGIN;
-
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 app.use(express.json());

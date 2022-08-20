@@ -31,6 +31,19 @@ const NavBar: React.FC = () => {
           </a>
         </Link>
       </span>
+
+      <div className="ml-5">
+        <Link href="/">
+          <a>WON HANA</a>
+        </Link>
+      </div>
+
+      <div className="ml-10">
+        <Link href="/community">
+          <a>커뮤니티</a>
+        </Link>
+      </div>
+
       <div className="max-w-full px-4 w-1/4 ml-auto hidden md:block">
         <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white my-2">
           <FaSearch className="ml-2 text-gray-400" />

@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import userMiddleware from "../middlewares/user";
 import authMiddleware from "../middlewares/auth";
 import Sub from "../entities/Sub";
+import Post from "../entities/Post";
 
 const createSub = async (req: Request, res: Response, next: NextFunction) => {
   const { name, title, description } = req.body;
@@ -40,14 +41,33 @@ const createSub = async (req: Request, res: Response, next: NextFunction) => {
 
     await sub.save();
     return res.json(sub);
-
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "문제가 발생했습니다." });
   }
 };
 
+const topSubs = async (req: Request, res: Response) => {
+  try {
+    const imageUrlExp = `COALESCE(s."imageUrn", 'https://www.gravatar.com/avatar?d=mp&f=y')`;
+    const subs = await AppDataSource.createQueryBuilder()
+      .select(
+        `s.title, s.name, ${imageUrlExp} as "imageUrl", count(p.id) as "postCount"`
+      )
+      .from(Sub, "s")
+      .leftJoin(Post, "p", `s.name = p."subName"`)
+      .groupBy('s.title, s.name, "imageUrl"')
+      .orderBy(`"postCount"`, "DESC")
+      .limit(5)
+      .execute();
+    return res.json(subs);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "문제가 발생하였습니다." });
+  }
+};
 const router = Router();
 router.post("/", userMiddleware, authMiddleware, createSub);
+router.get("/sub/topSubs", topSubs);
 
 export default router;
