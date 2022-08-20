@@ -3,7 +3,7 @@ import InputGroup from "../components/InputGroup";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
-// import { useAuthDispatch, useAuthState } from "../context/auth";
+import { useAuthDispatch, useAuthState } from "../context/auth";
 
 const Login = () => {
   let router = useRouter();
@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({});
   // const { authenticated } = useAuthState();
-  // const dispatch = useAuthDispatch();
+  const dispatch = useAuthDispatch();
 
   // if (authenticated) router.push("/");
 
@@ -24,7 +24,7 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      // dispatch("LOGIN", res.data?.user);
+      dispatch("LOGIN", res.data?.user);
 
       router.push("/");
     } catch (error: any) {
