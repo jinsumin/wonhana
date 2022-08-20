@@ -1,7 +1,7 @@
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-// import { FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { useAuthDispatch, useAuthState } from "../context/auth";
 import Animation from "./Animation";
 
@@ -38,7 +38,7 @@ const NavBar: React.FC = () => {
       </span>
       <div className="max-w-full px-4 w-1/3">
         <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white my-2">
-          {/* <FaSearch className="ml-2 text-gray-400" /> */}
+          <FaSearch className="ml-2 text-gray-400" />
           <input
             type="text"
             placeholder="검색어를 입력하세요"

@@ -16,6 +16,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     // 로컬에 저장
     res.locals.user = user;
     console.log("user", user);
+    return next();
   } catch (error) {
     console.error(error);
     return res.status(400).json({ error: "Something went wrong" });

@@ -123,6 +123,6 @@ const router = Router();
 router.get("/me", userMiddleware, authMiddleware, me);
 router.post("/register", register);
 router.post("/login", login);
-// router.post("/logout", userMiddleware, authMiddleware, logout);
+router.post("/logout", userMiddleware, authMiddleware, logout);
 
 export default router;
