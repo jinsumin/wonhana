@@ -1,8 +1,14 @@
 import { User } from "./../entities/User";
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import userMiddleware from "../middlewares/user";
+import authMiddleware from "../middlewares/auth";
 
-const createCommunity = async (req: Request, res: Response, next: any) => {
+const createCommunity = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { name, title, description } = req.body;
 
   const token = req.cookies.token;
@@ -14,6 +20,6 @@ const createCommunity = async (req: Request, res: Response, next: any) => {
 };
 
 const router = Router();
-router.post("/", createCommunity);
+router.post("/", userMiddleware, authMiddleware, createCommunity);
 
 export default router;
