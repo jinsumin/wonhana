@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import express from "express";
 import morgan from "morgan";
 import { AppDataSource } from "./data-source";
@@ -13,9 +14,9 @@ const origin = process.env.ORIGIN;
 
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
-
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(cookieParser());
 dotenv.config();
 
 app.get("/", (_, res) => res.send("running"));
