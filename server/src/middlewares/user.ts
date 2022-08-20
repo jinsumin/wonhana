@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.cookies.token;
+    console.log("token", token);
     if (!token) return next();
 
     const { username }: any = jwt.verify(token, process.env.JWT_SECRET);
@@ -14,6 +15,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
     // 로컬에 저장
     res.locals.user = user;
+    console.log("user", user);
   } catch (error) {
     console.error(error);
     return res.status(400).json({ error: "Something went wrong" });

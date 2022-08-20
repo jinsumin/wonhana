@@ -2,8 +2,9 @@ import React, { FormEvent, useState } from "react";
 import InputGroup from "../../components/InputGroup";
 import axios from "axios";
 import Router from "next/router";
+import { GetServerSideProps } from "next";
 
-const Create = () => {
+const SubCreate = () => {
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -13,8 +14,8 @@ const Create = () => {
     event.preventDefault();
 
     try {
-      const res = await axios.post("/community", { name, title, description });
-      Router.push(`/community/${res.data.name}`);
+      const res = await axios.post("/subs", { name, title, description });
+      Router.push(`/r/${res.data.name}`);
     } catch (error: any) {
       console.error(error);
       setErrors(error.response.data);
@@ -72,4 +73,19 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default SubCreate;
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  try {
+    const cookie = req.headers.cookie;
+    if (!cookie) throw new Error("Missing auth token cookie");
+
+    await axios.get("/auth/me", { headers: { cookie } });
+
+    return { props: {} };
+  } catch (error) {
+    // error code 307 : tempoprary redirect
+    res.writeHead(307, { Location: "/login" }).end();
+    return { props: {} };
+  }
+};
