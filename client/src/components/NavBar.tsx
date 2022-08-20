@@ -27,16 +27,11 @@ const NavBar: React.FC = () => {
         <Link href="/">
           <a>
             {/* <Animation /> */}
-            <Image
-              src="/h-logo.png"
-              alt="logo"
-              width={60}
-              height={50}
-            ></Image>
+            <Image src="/h-logo.png" alt="logo" width={60} height={50}></Image>
           </a>
         </Link>
       </span>
-      <div className="max-w-full px-4 w-1/3">
+      <div className="max-w-full px-4 w-1/4 ml-auto hidden md:block">
         <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white my-2">
           <FaSearch className="ml-2 text-gray-400" />
           <input
