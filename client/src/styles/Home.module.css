@@ -1,4 +1,4 @@
-.container {
+/* .container {
   padding: 0 2rem;
 }
 
@@ -126,4 +126,38 @@
   .logo img {
     filter: invert(1);
   }
+} */
+
+
+.tossteam-react__wrapper {
+  background-color: blue;
+  position: relative;
+  overflow: hidden;
+}
+
+.tossteam-react__fallback-poster {
+  background-color: blue;
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: block;
+  width: 100%;
+}
+
+.tossteam-react__fallback-poster__enabled {
+  z-index: -1;
+}
+
+.tossteam-react__video {
+  background-color: blue;
+  display: block;
+  width: 100%;
+  height: 100%;
+  mask-image: -webkit-radial-gradient(white, black);
+  backface-visibility: hidden;
+}
+
+.tossteam-react__video__hidden {
+  visibility: hidden;
+  z-index: -1;
 }

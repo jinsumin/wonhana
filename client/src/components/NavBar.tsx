@@ -22,12 +22,12 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between px-5 bg-slate-300 h-13">
-      <span className="text-2xl font-semibold text-gray-400 mt-2">
+    <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 bg-purple-100 h-13 shadow-xl">
+      <span className="text-2xl font-semibold text-gray-400">
         <Link href="/">
           <a>
-            {/* <Animation /> */}
-            <Image src="/h-logo.png" alt="logo" width={60} height={50}></Image>
+            <Animation />
+            {/* <Image src="/h-logo.png" alt="logo" width={60} height={50}></Image> */}
           </a>
         </Link>
       </span>

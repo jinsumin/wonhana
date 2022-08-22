@@ -15,7 +15,7 @@ const SubCreate = () => {
 
     try {
       const res = await axios.post("/subs", { name, title, description });
-      Router.push(`/r/${res.data.name}`);
+      Router.push(`/community/${res.data.name}`);
     } catch (error: any) {
       console.error(error);
       setErrors(error.response.data);
