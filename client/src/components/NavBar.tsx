@@ -22,8 +22,8 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 bg-purple-100 h-13 shadow-xl">
-      <span className="text-2xl font-semibold text-gray-400">
+    <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 h-13 shadow-xl">
+      <span className="text-2xl font-semibold text-white">
         <Link href="/">
           <a>
             <Animation />
@@ -32,13 +32,13 @@ const NavBar: React.FC = () => {
         </Link>
       </span>
 
-      <div className="ml-5">
+      <div className="ml-5 text-white font-semibold text-2xl">
         <Link href="/">
           <a>WON HANA</a>
         </Link>
       </div>
 
-      <div className="ml-10">
+      <div className="ml-10 text-white text-xl">
         <Link href="/community">
           <a>커뮤니티</a>
         </Link>

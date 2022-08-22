@@ -15,9 +15,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <AuthProvider>
-      {!authRoute && <NavBar />}
-      <div className={authRoute ? "" : "pt-14"}>
-        <Component {...pageProps} />
+      <div className="font-poppins">
+        {!authRoute && <NavBar />}
+        <div className={authRoute ? "" : ""}>
+          <Component {...pageProps} />
+        </div>
       </div>
     </AuthProvider>
   );

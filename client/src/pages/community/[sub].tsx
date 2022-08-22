@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useRef } from "react";
 import useSWR from "swr";
 import axios from "axios";
 import Image from "next/image";
@@ -14,6 +14,7 @@ const SubPage = () => {
     }
   };
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const subName = router.query.sub;
   const { data: sub, error } = useSWR(
@@ -26,6 +27,7 @@ const SubPage = () => {
       {sub && (
         <>
           <div>
+            <input type="file" hidden={true} />
             {/* 배너 이미지 */}
             <div className="bg-purple-400">
               {sub.bannerUrl ? (
@@ -59,20 +61,19 @@ const SubPage = () => {
                   )}
                 </div>
                 <div className="pt-1 pl-24">
-                    <div className="flex items-center">
-                        <h1 className="mb-1 text-3xl font-bold">{sub.title}</h1>
-                    </div>
-                    <p className="text-small font-bold tex-gray-400">
+                  <div className="flex items-center">
+                    <h1 className="mb-1 text-3xl font-bold">{sub.title}</h1>
+                  </div>
+                  <p className="text-small font-bold tex-gray-400">
                     /community/{sub.name}
-                </p>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* 포스트와 사이드바 */}
-          <div className="flex max-w-5xl px-4 pt-5 mx-auto">
-          </div>
+          <div className="flex max-w-5xl px-4 pt-5 mx-auto"></div>
         </>
       )}
     </>
