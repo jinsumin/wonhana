@@ -10,12 +10,24 @@ import multer, { FileFilterCallback } from "multer";
 import { makeId } from "../utils/helpers";
 import path from "path";
 import { unlinkSync } from "fs";
-import express from "express";
 
 const getSub = async (req: Request, res: Response) => {
   const name = req.params.name;
   try {
     const sub = await Sub.findOneByOrFail({ name });
+
+    const posts = await Post.find({
+      where: { subName: sub.name },
+      order: { createdAt: "DESC" },
+      relations: ["comments", "votes"],
+    });
+
+    sub.posts = posts;
+
+    if (res.locals.user) {
+      sub.posts.forEach((p) => p.setUserVote(res.locals.user));
+    }
+
     return res.json(sub);
   } catch (error) {
     return res.status(404).json({ error: "커뮤니티를 찾을 수 없습니다." });
