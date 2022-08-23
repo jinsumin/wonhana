@@ -2,11 +2,14 @@ import { AppDataSource } from "../data-source";
 import { isEmpty } from "class-validator";
 import { User } from "../entities/User";
 import { Router, Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
 import userMiddleware from "../middlewares/user";
 import authMiddleware from "../middlewares/auth";
 import Sub from "../entities/Sub";
 import Post from "../entities/Post";
+import multer, { FileFilterCallback } from "multer";
+import { makeId } from "../utils/helpers";
+import path from "path";
+import { unlinkSync } from "fs";
 
 const getSub = async (req: Request, res: Response) => {
   const name = req.params.name;
@@ -86,6 +89,68 @@ const ownSub = async (req: Request, res: Response, next: NextFunction) => {
     }
     res.locals.sub = sub;
     next();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "문제가 발생하였습니다." });
+  }
+};
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: "public/images",
+    filename: (_, file, callback) => {
+      const name = makeId(10);
+      callback(null, name + path.extname(file.originalname));
+    },
+  }),
+  fileFilter: (_, file: any, callback: FileFilterCallback) => {
+    if (
+      file.mimetype === "image/jpeg" ||
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/svg"
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("이미지 파일이 아닙니다."));
+    }
+  },
+});
+
+const uploadSubImage = async (req: Request, res: Response) => {
+  const sub: Sub = res.locals.sub;
+  try {
+    const type = req.body.type;
+
+    if (type !== "image" && type !== "banner") {
+      if (!req.file?.path) {
+        return res.status(400).json({ error: "유효하지 않은 파일" });
+      }
+      unlinkSync(req.file.path);
+      return res.status(400).json({ erorr: "잘못된 유형" });
+    }
+
+    let oldImageUrn: string = "";
+
+    if (type === "image") {
+      oldImageUrn = sub.imageUrn || "";
+      sub.imageUrn = req.file?.filename || "";
+    } else if (type === "banner") {
+      oldImageUrn = sub.bannerUrn || "";
+      sub.bannerUrn = req.file?.filename || "";
+    }
+    await sub.save();
+
+    if (oldImageUrn !== "") {
+      const fullFileName = path.resolve(
+        process.cwd(),
+        "public",
+        "images",
+        oldImageUrn
+      );
+      unlinkSync(fullFileName);
+    }
+    return res.json(sub);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "문제가 발생하였습니다." });
