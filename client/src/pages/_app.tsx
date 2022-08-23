@@ -4,6 +4,9 @@ import axios from "axios";
 import { AuthProvider } from "../context/auth";
 import { useRouter } from "next/router";
 import NavBar from "../components/NavBar";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }: AppProps) {
   axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";

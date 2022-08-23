@@ -8,6 +8,7 @@ const Animation = () => {
       loop
       animationData={lottieJson}
       play
+      speed={0.6}
       style={{ width: 50, height: 50 }}
     />
   );
