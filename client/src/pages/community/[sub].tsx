@@ -60,7 +60,7 @@ const SubPage = () => {
               onChange={uploadImage}
             />
             {/* 배너 이미지 */}
-            <div className="bg-slate-200">
+            <div className="bg-slate-400">
               {sub.bannerUrl ? (
                 <div
                   className="h-56"
@@ -74,7 +74,7 @@ const SubPage = () => {
                 ></div>
               ) : (
                 <div
-                  className="bg-slate-300"
+                  className="bg-slate-400 h-56"
                   onClick={() => openFileInput("banner")}
                 ></div>
               )}
@@ -84,16 +84,18 @@ const SubPage = () => {
             <div className="h-20 bg-slate-200">
               <div className="relative flex max-w-7xl px-5 mx-auto">
                 <div className="absolute" style={{ top: -15 }}>
+                  <div className="rounded-full border-8  border-slate-200" style={{height:85, width:85}}>
                   {sub.imageUrl && (
                     <Image
                       src={sub.imageUrl}
                       alt="커뮤니티 이미지"
                       width={80}
                       height={80}
-                      className="rounded-full"
+                      className="rounded-full border-8 border-indigo-500"
                       onClick={() => openFileInput("image")}
                     />
                   )}
+                  </div>
                 </div>
                 <div className="pt-1 pl-24">
                   <div className="flex items-center">
