@@ -10,22 +10,10 @@ const SubPage = () => {
   const [ownSub, setOwnSub] = useState(false);
   const { authenticated, user } = useAuthState();
 
-  const fetcher = async (url: string) => {
-    try {
-      const res = await axios.get(url);
-      return res.data;
-    } catch (error: any) {
-      throw error.response.data;
-    }
-  };
-
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const subName = router.query.sub;
-  const { data: sub, error } = useSWR(
-    subName ? `/subs/${subName}` : null,
-    fetcher
-  );
+  const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null);
 
   useEffect(() => {
     if (!sub || !user) return;
@@ -85,8 +73,9 @@ const SubPage = () => {
                   onClick={() => openFileInput("banner")}
                 ></div>
               ) : (
-                <div className="bg-slate-300"
-                    onClick={() => openFileInput("banner")}
+                <div
+                  className="bg-slate-300"
+                  onClick={() => openFileInput("banner")}
                 ></div>
               )}
             </div>
@@ -108,7 +97,9 @@ const SubPage = () => {
                 </div>
                 <div className="pt-1 pl-24">
                   <div className="flex items-center">
-                    <h1 className="mt-2 mb-1 text-2xl font-bold">{sub.title}</h1>
+                    <h1 className="mt-2 mb-1 text-2xl font-bold">
+                      {sub.title}
+                    </h1>
                   </div>
                   <p className="text-small font-bold text-gray-400">
                     /community/{sub.name}
@@ -121,7 +112,7 @@ const SubPage = () => {
           {/* 포스트와 사이드바 */}
           <div className="flex max-w-5xl px-4 pt-5 mx-auto">
             <div className="w-full md:mr-3 md:w-8/12"></div>
-            <SideBar sub={sub}/>
+            <SideBar sub={sub} />
           </div>
         </>
       )}

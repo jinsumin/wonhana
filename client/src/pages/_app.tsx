@@ -4,6 +4,7 @@ import axios from "axios";
 import { AuthProvider } from "../context/auth";
 import { useRouter } from "next/router";
 import NavBar from "../components/NavBar";
+import { SWRConfig } from "swr";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
@@ -16,15 +17,26 @@ function MyApp({ Component, pageProps }: AppProps) {
   const authRoutes = ["/register", "/login"];
   const authRoute = authRoutes.includes(pathname);
 
+  const fetcher = async (url: string) => {
+    try {
+      const res = await axios.get(url);
+      return res.data;
+    } catch (error: any) {
+      throw error.response.data;
+    }
+  };
+
   return (
-    <AuthProvider>
-      <div className="font-poppins">
-        {!authRoute && <NavBar />}
-        <div className={authRoute ? "" : "mt-14"}>
-          <Component {...pageProps} />
+    <SWRConfig value={{ fetcher }}>
+      <AuthProvider>
+        <div className="font-poppins">
+          {!authRoute && <NavBar />}
+          <div className={authRoute ? "" : "mt-14"}>
+            <Component {...pageProps} />
+          </div>
         </div>
-      </div>
-    </AuthProvider>
+      </AuthProvider>
+    </SWRConfig>
   );
 }
 
