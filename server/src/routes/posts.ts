@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import userMiddleware from "../middlewares/user";
 import authMiddleware from "../middlewares/auth";
 import Post from "../entities/Post";
+import Sub from "../entities/Sub";
 
 const createPost = async (req: Request, res: Response) => {
   const { title, body, sub } = req.body;
@@ -12,7 +13,7 @@ const createPost = async (req: Request, res: Response) => {
   const user = res.locals.user;
 
   try {
-    const subRecord = await Sub.findOneOrFail({ name: sub });
+    const subRecord = await Sub.findOneByOrFail({ name: sub });
     const post = new Post();
 
     post.title = title;
