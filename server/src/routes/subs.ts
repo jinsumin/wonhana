@@ -76,10 +76,34 @@ const topSubs = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "문제가 발생하였습니다." });
   }
 };
+
+const ownSub = async (req: Request, res: Response, next: NextFunction) => {
+  const user: User = res.locals.user;
+  try {
+    const sub = await Sub.findOneOrFail({ where: { name: req.params.name } });
+    if (sub.username !== user.username) {
+      return res.status(403).json({ error: "커뮤니티 소유자가 아닙니다." });
+    }
+    res.locals.sub = sub;
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "문제가 발생하였습니다." });
+  }
+};
+
 const router = Router();
 
 router.get("/:name", userMiddleware, getSub);
 router.post("/", userMiddleware, authMiddleware, createSub);
 router.get("/sub/topSubs", topSubs);
+router.post(
+  "/:name/upload",
+  userMiddleware,
+  authMiddleware,
+  ownSub,
+  upload.single("file"),
+  uploadSubImage
+);
 
 export default router;

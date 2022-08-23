@@ -5,7 +5,7 @@ const Intro = () => {
   return (
     <>
       <header className="relative flex items-center justify-center h-screen mb-12 overflow-hidden bg-black">
-        <div className="relative z-30 p-5 text-2xl text-white bg-purple-400 bg-opacity-50 rounded-xl">
+        <div className="relative z-30 p-5 text-2xl text-white bg-red-400 bg-opacity-50 rounded-xl mb-20">
           This is WONHANA web page!
         </div>
         <video

@@ -22,7 +22,7 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 h-13 shadow-xl">
+    <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 h-13 shadow-xl bg-slate-700">
       <span className="text-2xl font-semibold text-white">
         <Link href="/">
           <a>
@@ -32,13 +32,13 @@ const NavBar: React.FC = () => {
         </Link>
       </span>
 
-      <div className="ml-5 text-white font-semibold text-2xl">
+      <div className="ml-5 text-white font-semibold text-2xl mt-1">
         <Link href="/">
           <a>WON HANA</a>
         </Link>
       </div>
 
-      <div className="ml-10 text-white text-xl">
+      <div className="ml-10 text-white text-xl mt-1">
         <Link href="/community">
           <a>커뮤니티</a>
         </Link>
@@ -50,7 +50,7 @@ const NavBar: React.FC = () => {
           <input
             type="text"
             placeholder="검색어를 입력하세요"
-            className="px-3 py-1 bg-transparent rounded focus:outline-none h-11"
+            className="px-3 py-1 bg-transparent rounded focus:outline-none h-10"
           />
         </div>
       </div>
@@ -59,7 +59,7 @@ const NavBar: React.FC = () => {
         {!loading &&
           (authenticated ? (
             <button
-              className="w-20 px-2 mr-2 text-sm text-center text-white bg-gray-400 rounded h-11"
+              className="w-20 px-2 mr-2 text-sm text-center text-white bg-gray-400 rounded h-10"
               onClick={handleLogout}
             >
               로그아웃
@@ -67,12 +67,12 @@ const NavBar: React.FC = () => {
           ) : (
             <>
               <Link href="/login">
-                <a className="flex justify-center items-center w-20 mr-2 text-lg text-blue-500 border border-blue-500 rounded h-11">
+                <a className="flex justify-center items-center w-20 mr-2 text-lg text-blue-500 border border-blue-500 rounded h-10">
                   로그인
                 </a>
               </Link>
               <Link href="/register">
-                <a className="flex justify-center items-center w-20 mr-2 text-lg text-white bg-gray-400 rounded h-11">
+                <a className="flex justify-center items-center w-20 mr-2 text-lg text-white bg-gray-400 rounded h-10">
                   회원가입
                 </a>
               </Link>
