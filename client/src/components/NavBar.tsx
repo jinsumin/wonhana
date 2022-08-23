@@ -44,8 +44,24 @@ const NavBar: React.FC = () => {
         </Link>
       </div>
 
+      <div className="h-5 w-px bg-gray-500 ml-5" />
+
+      <div className="ml-5 text-white text-xl mt-1">
+        <Link href="/">
+          <a>중고마켓</a>
+        </Link>
+      </div>
+
+      <div className="h-5 w-px bg-gray-500 ml-5" />
+
+      <div className="ml-5 text-white text-xl mt-1">
+        <Link href="/">
+          <a>채팅</a>
+        </Link>
+      </div>
+
       <div className="max-w-full px-4 w-1/4 ml-auto hidden md:block">
-        <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white my-2">
+        <div className="relative flex items-center bg-gray-100 border rounded-3xl hover:border-gray-700 hover:bg-white my-2">
           <FaSearch className="ml-2 text-gray-400" />
           <input
             type="text"
@@ -59,7 +75,7 @@ const NavBar: React.FC = () => {
         {!loading &&
           (authenticated ? (
             <button
-              className="w-20 px-2 mr-2 text-sm text-center text-white bg-gray-400 rounded h-10"
+              className="w-20 px-2 mr-2 text-sm text-center text-white bg-gray-400 rounded-3xl h-10"
               onClick={handleLogout}
             >
               로그아웃
@@ -67,12 +83,13 @@ const NavBar: React.FC = () => {
           ) : (
             <>
               <Link href="/login">
-                <a className="flex justify-center items-center w-20 mr-2 text-lg text-blue-500 border border-blue-500 rounded h-10">
+                <a className="flex justify-center items-center w-20 mr-2 text-base text-white mt-1">
                   로그인
                 </a>
               </Link>
+
               <Link href="/register">
-                <a className="flex justify-center items-center w-20 mr-2 text-lg text-white bg-gray-400 rounded h-10">
+                <a className="flex justify-center items-center w-20 mr-2 text-base text-white mt-1">
                   회원가입
                 </a>
               </Link>
