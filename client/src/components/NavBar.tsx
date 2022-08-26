@@ -32,13 +32,13 @@ const NavBar: React.FC = () => {
         </Link>
       </span>
 
-      <div className="ml-5 text-white font-semibold text-2xl mt-1">
+      <div className="ml-5 text-white font-semibold text-2xl">
         <Link href="/">
           <a>WON HANA</a>
         </Link>
       </div>
 
-      <div className="ml-10 text-white text-xl mt-1">
+      <div className="ml-10 text-white text-xl">
         <Link href="/community">
           <a>커뮤니티</a>
         </Link>
@@ -46,7 +46,7 @@ const NavBar: React.FC = () => {
 
       <div className="h-5 w-px bg-gray-500 ml-5" />
 
-      <div className="ml-5 text-white text-xl mt-1">
+      <div className="ml-5 text-white text-xl">
         <Link href="/">
           <a>중고마켓</a>
         </Link>
@@ -54,7 +54,7 @@ const NavBar: React.FC = () => {
 
       <div className="h-5 w-px bg-gray-500 ml-5" />
 
-      <div className="ml-5 text-white text-xl mt-1">
+      <div className="ml-5 text-white text-xl">
         <Link href="/">
           <a>채팅</a>
         </Link>
@@ -83,13 +83,13 @@ const NavBar: React.FC = () => {
           ) : (
             <>
               <Link href="/login">
-                <a className="flex justify-center items-center w-20 mr-2 text-base text-white mt-1">
+                <a className="flex justify-center items-center w-20 mr-2 text-base text-white">
                   로그인
                 </a>
               </Link>
 
               <Link href="/register">
-                <a className="flex justify-center items-center w-20 mr-2 text-base text-white mt-1">
+                <a className="flex justify-center items-center w-20 mr-2 text-base text-white">
                   회원가입
                 </a>
               </Link>

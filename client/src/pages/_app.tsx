@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig value={{ fetcher }}>
       <AuthProvider>
-        <div className="font-poppins">
+        <div className="sample-font">
           {!authRoute && <NavBar />}
           <div className={authRoute ? "" : "mt-14"}>
             <Component {...pageProps} />
