@@ -8,7 +8,10 @@ import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { useAuthState } from "../../../../context/auth";
+import classNames from "classnames";
 
 const PostPage = () => {
   const router = useRouter();
@@ -43,6 +46,29 @@ const PostPage = () => {
     }
   };
 
+  const vote = async (value: number, comment?: Comment) => {
+    if (!authenticated) router.push("/login");
+
+    // reset
+    if (
+      (!comment && value === post?.userVote) ||
+      (comment && comment.userVote === value)
+    ) {
+      value = 0;
+    }
+
+    try {
+      await axios.post("./votes", {
+        identifier,
+        slug,
+        commentIdentifier: comment?.identifier,
+        value,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
       <div className="w-full md:mr-3 md:w-8/12">
@@ -50,6 +76,34 @@ const PostPage = () => {
           {post && (
             <>
               <div className="flex">
+                {/* post up & down 기능 */}
+                <div className="flex-shrink-0 w-10 text-center rounded-l">
+                  {/* up */}
+                  <div
+                    className="w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500"
+                    onClick={() => vote(1)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faThumbsUp}
+                      className={classNames({
+                        "text-red-500": post.userVote === 1,
+                      })}
+                    />
+                  </div>
+                  <p className="text-xs font-bold">{post.voteScore}</p>
+                  {/* down */}
+                  <div
+                    className="w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-500"
+                    onClick={() => vote(-1)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faThumbsDown}
+                      className={classNames({
+                        "text-blue-500": post.userVote === -1,
+                      })}
+                    />
+                  </div>
+                </div>
                 <div className="py-2 pr-2">
                   <div className="flex items-center">
                     <p className="text-xs text-gray-400">
@@ -80,7 +134,7 @@ const PostPage = () => {
                 </div>
               </div>
               <div>
-                <div className="pr-6 mb-4">
+                <div className="pr-6 mb-4 ml-10">
                   {authenticated ? (
                     <div>
                       <p className="mb-1 text-xs">
@@ -127,6 +181,33 @@ const PostPage = () => {
               {/* 댓글 리스트 */}
               {comments?.map((comment) => (
                 <div className="flex" key={comment.identifier}>
+                  <div className="flex-shrink-0 w-10 text-center rounded-l">
+                    {/* up */}
+                    <div
+                      className="w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500"
+                      onClick={() => vote(1, comment)}
+                    >
+                      <FontAwesomeIcon
+                        icon={faThumbsUp}
+                        className={classNames({
+                          "text-red-500": comment.userVote === 1,
+                        })}
+                      />
+                    </div>
+                    <p className="text-xs font-bold">{comment.voteScore}</p>
+                    {/* down */}
+                    <div
+                      className="w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-500"
+                      onClick={() => vote(-1, comment)}
+                    >
+                      <FontAwesomeIcon
+                        icon={faThumbsDown}
+                        className={classNames({
+                          "text-blue-500": comment.userVote === -1,
+                        })}
+                      />
+                    </div>
+                  </div>
                   <div className="py-2 pr-2">
                     <p className="mb-1 text-xs leading-none">
                       <Link href={`/user/${comment.username}`}>
@@ -138,7 +219,9 @@ const PostPage = () => {
                         {`
                           ${comment.voteScore}
                           posts
-                          ${dayjs(comment.createdAt).format("YYYY-MM-DD HH:mm")}  
+                          ${dayjs(comment.createdAt).format(
+                            "YYYY-MM-DD HH:mm"
+                          )}  
                         `}
                       </span>
                     </p>
