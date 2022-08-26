@@ -2,11 +2,12 @@ import { useRouter } from "next/router";
 import React, { FormEvent, useState } from "react";
 import axios from "axios";
 import useSWR from "swr";
-import { Post } from "../../../../types";
+import { Comment, Post } from "../../../../types";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { useAuthState } from "../../../../context/auth";
 
 const PostPage = () => {
@@ -19,6 +20,12 @@ const PostPage = () => {
   const { data: post, error } = useSWR<Post>(
     identifier && slug ? `/posts/${identifier}/${slug}` : null
   );
+
+  const { data: comments } = useSWR<Comment[]>(
+    identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
+  );
+
+  console.log("comments", comments);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -45,8 +52,8 @@ const PostPage = () => {
                 <div className="py-2 pr-2">
                   <div className="flex items-center">
                     <p className="text-xs text-gray-400">
-                      Posted by <FontAwesomeIcon icon="fa-solid fa-circle-info" />
-                      {console.log("post user", post.username)}
+                      Posted by
+                      <FontAwesomeIcon icon={faCircleInfo} className="ml-2" />
                       <Link href={`/user/${post.username}`}>
                         <a className="mx-1 hover:underline">
                           /user/{post.username}
@@ -64,7 +71,6 @@ const PostPage = () => {
                   <div className="flex">
                     <button>
                       <FontAwesomeIcon icon={faMessage} />
-                      {/* <i className="mr-1 fas fa-comment-alt fa-xs"></i> */}
                       <span className="font-bold">
                         {post.commentCount} Comments
                       </span>
@@ -116,6 +122,29 @@ const PostPage = () => {
                   )}
                 </div>
               </div>
+
+              {/* 댓글 리스트 */}
+              {comments?.map((comment) => (
+                <div className="flex" key={comment.identifier}>
+                  <div className="py-2 pr-2">
+                    <p className="mb-1 text-xs leading-none">
+                      <Link href={`/user/${comment.username}`}>
+                        <a className="mr-1 font-bold hover:underline">
+                          {comment.username}
+                        </a>
+                      </Link>
+                      <span className="text-gray-600">
+                        {`
+                          ${comment.voteScore}
+                          posts
+                          ${dayjs(comment.createdAt).format("YYYY-MM-DD HH:mm")}  
+                        `}
+                      </span>
+                    </p>
+                    <p>{comment.body}</p>
+                  </div>
+                </div>
+              ))}
             </>
           )}
         </div>
